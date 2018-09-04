@@ -52,8 +52,9 @@
 #include "cmsis_os.h"
 
 /* USER CODE BEGIN Includes */
-#include "stm32f0xx_hal.h"
-#include "main.h"
+
+#include "ade.h"
+
 /* USER CODE END Includes */
 
 /* Variables -----------------------------------------------------------------*/
@@ -69,8 +70,7 @@ void StartDefaultTask(void const * argument);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* USER CODE BEGIN FunctionPrototypes */
-void vLEDTask(void *pvParameters);
-void vLEDTask2(void *pvParameters);
+
 /* USER CODE END FunctionPrototypes */
 
 /* Hook prototypes */
@@ -103,8 +103,7 @@ void MX_FREERTOS_Init(void)
 	/* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
 
-	xTaskCreate(vLEDTask, "LEDTask", 100, NULL, 1, NULL);
-	xTaskCreate(vLEDTask2, "LEDTask2", 100, NULL, 1, NULL);
+	xTaskCreate(vAdeTask, "AdeTask", 256, NULL, 1, NULL);
 
 	/* USER CODE END RTOS_THREADS */
 
@@ -127,30 +126,7 @@ void StartDefaultTask(void const * argument)
 }
 
 /* USER CODE BEGIN Application */
-void vLEDTask(void *pvParameters)
-{
 
-	for (;;)
-	{
-		HAL_GPIO_WritePin(OUT1_LED_R_GPIO_Port,OUT1_LED_R_Pin,GPIO_PIN_SET);
-//		HAL_GPIO_TogglePin(OUT1_LED_R_GPIO_Port, OUT1_LED_R_Pin);
-		//vTaskDelay(1);
-	}
-
-	vTaskDelete(NULL);
-}
-void vLEDTask2(void *pvParameters)
-{
-
-	for (;;)
-	{
-		HAL_GPIO_WritePin(OUT1_LED_R_GPIO_Port,OUT1_LED_R_Pin,GPIO_PIN_RESET);
-//		HAL_GPIO_TogglePin(OUT1_LED_R_GPIO_Port, OUT1_LED_R_Pin);
-		//vTaskDelay(100 / portTICK_RATE_MS);
-	}
-
-	vTaskDelete(NULL);
-}
 /* USER CODE END Application */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
